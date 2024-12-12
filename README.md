@@ -74,7 +74,7 @@ This solution leverages a Large Language Model (LLM), specifically OpenAI's GPT,
      - Iteratively refined the prompt to ensure consistent responses.
      - Modularized the prompt into a separate JSON file for easier updates and maintainability.
 
-3. **Scalability**:
+3. **Scalability**: (How can be mitigated in future)
    ### **Challenges**
    - **Large Input Reports**:
      - **Issue**: Large reports can exceed token limits or cause memory issues during processing.
