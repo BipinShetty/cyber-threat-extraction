@@ -62,7 +62,7 @@ This document explains how the solution meets the evaluation criteria for the cy
 
 ---
 
-## **5. Performance: Efficient Processing of Medium to Large Reports**
+## **5. Performance: Efficient Processing of Medium to Large Reports**(Future enhancements)
 - **Implementation**:
   - Batch processing splits large reports into manageable chunks.
   - Caching avoids redundant API calls, reducing latency and improving efficiency.
