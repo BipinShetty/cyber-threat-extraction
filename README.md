@@ -59,35 +59,42 @@ This solution leverages a Large Language Model (LLM), specifically OpenAI's GPT,
 
 ---
 
-## Challenges Faced and How They Were Mitigated
+
+## **Challenges Faced and How They Were Mitigated**
 
 1. **Hallucinated JSON Responses**:
-   - Issue: The LLM occasionally returned incomplete or invalid JSON outputs.
-   - Mitigation: Added regex-based extraction to identify valid JSON portions, followed by schema validation to ensure the output adheres to the required structure.
+   - **Issue**: The LLM occasionally returned incomplete or invalid JSON outputs.
+   - **Mitigation**: 
+     - Added regex-based extraction to identify valid JSON portions.
+     - Followed up with schema validation to ensure the output adheres to the required structure.
 
 2. **Prompt Tuning**:
-   - Issue: Initial prompts resulted in inconsistent entity classifications.
-   - Mitigation: Iterative refinement of the prompt and modularization into a separate JSON file for easier updates.
+   - **Issue**: Initial prompts resulted in inconsistent entity classifications.
+   - **Mitigation**:
+     - Iteratively refined the prompt to ensure consistent responses.
+     - Modularized the prompt into a separate JSON file for easier updates and maintainability.
 
 3. **Scalability**:
-   Challenges
-Large Input Reports:
--Issue: Large reports can exceed token limits or cause memory issues during processing.
-Impact: The system may fail to handle extensive datasets or produce incomplete outputs.
-Repeated Requests:
--Issue: Similar input chunks may result in redundant API calls, increasing latency and costs.
-Impact: Processing time and resource utilization become inefficient.
-Mitigation Strategies
-Batch Processing:
-Approach: Split large reports into smaller, manageable chunks (e.g., paragraphs or sections) and process them sequentially.
-Benefits:
-Reduces token usage per request.
-Ensures scalability for larger datasets without memory overflow.
--Caching API Responses:
-Approach: Use a caching mechanism to store responses for previously processed input chunks.
-Benefits:
-Eliminates redundant API calls for identical inputs.
-Enhances performance by reducing processing time and API costs.
+   ### **Challenges**
+   - **Large Input Reports**:
+     - **Issue**: Large reports can exceed token limits or cause memory issues during processing.
+     - **Impact**: The system may fail to handle extensive datasets or produce incomplete outputs.
+   - **Repeated Requests**:
+     - **Issue**: Similar input chunks may result in redundant API calls, increasing latency and costs.
+     - **Impact**: Processing time and resource utilization become inefficient.
+
+   ### **Mitigation Strategies**
+   1. **Batch Processing**:
+      - **Approach**: Split large reports into smaller, manageable chunks (e.g., paragraphs or sections) and process them sequentially.
+      - **Benefits**:
+        - Reduces token usage per request.
+        - Ensures scalability for larger datasets without memory overflow.
+   2. **Caching API Responses**:
+      - **Approach**: Use a caching mechanism to store responses for previously processed input chunks.
+      - **Benefits**:
+        - Eliminates redundant API calls for identical inputs.
+        - Enhances performance by reducing processing time and API costs.
+
 
 Solution
 Break the report into smaller batches (e.g., paragraphs or sections) and process them sequentially or concurrently.
