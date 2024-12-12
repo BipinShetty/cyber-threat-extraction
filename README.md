@@ -164,10 +164,3 @@ The threat actor "ShadowBear" has been identified using the malware "MalNet" in 
 - `networkx`
 - `pytest`
 
----
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
----
