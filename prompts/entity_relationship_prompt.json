@@ -1,0 +1,3 @@
+{
+    "prompt": "Analyze the following cybersecurity threat intelligence report and extract the key entities and their relationships.\n\nRequirements:\n- Extract entities and classify them into the following types:\n  - Threat Actor\n  - Malware\n  - TTPs (Tactics, Techniques, Procedures)\n  - Indicators (IP addresses, file hashes, URLs, domains, etc.)\n  - Industry\n  - Location\n- Identify relationships between entities, such as:\n  - Uses: (e.g., threat actor uses malware or TTPs)\n  - Targets: (e.g., malware targets industry or location)\n  - Communicates With: (e.g., threat actors collaborating or interacting)\n\nCybersecurity Report:\n{report_text}"
+}

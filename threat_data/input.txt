@@ -1,0 +1,21 @@
+Report Summary:
+A cybersecurity threat has been identified involving the threat actor "ShadowBear."
+
+Key Findings:
+1. The threat actor "ShadowBear" is linked to Eastern Europe.
+2. "ShadowBear" used the malware "MalNet" in a targeted campaign.
+3. The target of the campaign was the healthcare industry in Europe.
+4. The attack was delivered through phishing emails.
+5. "ShadowBear" has a history of targeting government institutions.
+
+Details:
+- Threat Actor: "ShadowBear"
+  - Region: Eastern Europe
+  - Known Activity: Previous attacks on government institutions
+
+- Malware: "MalNet"
+  - Usage: Deployed by "ShadowBear" in recent campaigns
+  - Delivery Method: Phishing emails
+
+- Target: Healthcare Industry
+  - Region: Europe
