@@ -95,11 +95,6 @@ This solution leverages a Large Language Model (LLM), specifically OpenAI's GPT,
         - Eliminates redundant API calls for identical inputs.
         - Enhances performance by reducing processing time and API costs.
 
-
-Solution
-Break the report into smaller batches (e.g., paragraphs or sections) and process them sequentially or concurrently.
----
-
 ## Installation
 
 1. **Clone the repository**:
