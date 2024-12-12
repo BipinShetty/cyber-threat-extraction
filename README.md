@@ -41,6 +41,39 @@ cyber-threat-extraction/
 
 ---
 
+## Approach to Solving the Problem Using LLMs
+
+This solution leverages a Large Language Model (LLM), specifically OpenAI's GPT, to analyze cybersecurity threat intelligence reports. The LLM is prompted to identify and classify key entities such as Threat Actors, Malware, and TTPs, and extract relationships between them (e.g., "uses", "targets"). These outputs are normalized into a structured JSON format.
+
+### How the LLM Was Integrated into the Solution
+1. **Prompt Design**:
+   - A carefully crafted prompt is stored in a JSON file (`prompts/entity_relationship_prompt.json`) to ensure consistency and clarity in the LLM's response.
+   - The prompt specifies the requirements for entity extraction, relationship identification, and the expected JSON output structure.
+
+2. **Workflow**:
+   - The main script (`main.py`) reads the input report (`threat_data/input.txt`) and passes it along with the prompt to the OpenAI GPT API.
+   - The LLM's output is then parsed, validated, and consolidated to remove duplicates or incomplete entries.
+
+3. **Error Handling**:
+   - To handle flaky or hallucinated responses, the code validates the JSON structure and falls back to error messages if invalid responses are encountered.
+
+---
+
+## Challenges Faced and How They Were Mitigated
+
+1. **Hallucinated JSON Responses**:
+   - Issue: The LLM occasionally returned incomplete or invalid JSON outputs.
+   - Mitigation: Added regex-based extraction to identify valid JSON portions, followed by schema validation to ensure the output adheres to the required structure.
+
+2. **Prompt Tuning**:
+   - Issue: Initial prompts resulted in inconsistent entity classifications.
+   - Mitigation: Iterative refinement of the prompt and modularization into a separate JSON file for easier updates.
+
+3. **Scalability**:
+   - Issue: Large reports posed a potential risk of exceeding token limits.
+   - Mitigation: Implemented logging and structure to handle smaller batches of reports if required.
+---
+
 ## Installation
 
 1. **Clone the repository**:
