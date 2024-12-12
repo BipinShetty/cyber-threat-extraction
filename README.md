@@ -189,6 +189,8 @@ Details:
 }
 ```
 
+![graph](https://github.com/user-attachments/assets/71abfefc-aeba-44b3-8eef-50f4f4580995)
+
 ---
 
 ## Features and Highlights
