@@ -328,17 +328,6 @@ Details:
 
 ---
 
-## Features and Highlights
-
-- **Scalability**:
-  - Modular design allows easy addition of new entity types or relationship categories.
-- **Visualization**:
-  - Graphical representation of relationships for quick insights.
-- **Error Handling**:
-  - Comprehensive logging and schema validation for robust error detection.
-
----
-
 ## Testing
 
 1. **Run All Tests**:
@@ -349,31 +338,6 @@ Details:
 2. **Unit Test Coverage**:
    - Consolidation logic (`test_consolidate_entities.py`).
    - JSON validation schema (`test_validate_output_schema.py`).
-
----
-
-## Challenges Faced
-
-1. **Prompt Design**:
-   - Fine-tuning the prompt to ensure consistent entity and relationship extraction.
-   - Modularized prompts for flexibility.
-
-2. **Handling Flaky Responses**:
-   - Added logic to handle invalid or partial JSON responses from the LLM.
-
-3. **Performance**:
-   - Optimized for smaller reports; scalability for large datasets is a potential enhancement.
-
----
-
-## Future Enhancements
-
-1. **Scalability**:
-   - Batch processing for large reports to handle high volumes of data.
-2. **Interactive Visualization**:
-   - Use tools like `pyvis` for interactive graph visualizations.
-3. **Multilingual Support**:
-   - Expand prompt and validation to support reports in multiple languages.
 
 ---
 
