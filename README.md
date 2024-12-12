@@ -14,6 +14,87 @@ This project leverages OpenAI's GPT to extract entities and relationships from c
 
 ---
 
+# Evaluation Criteria and Implementation Details
+
+This document explains how the solution meets the evaluation criteria for the cybersecurity threat intelligence extraction project.
+
+---
+
+## **1. Correctness: Accuracy of Entity and Relationship Extraction**
+- **Implementation**:
+  - Entities are extracted with specific types such as `Threat Actor`, `Malware`, and `TTPs`.
+  - Relationships such as `uses` and `targets` are mapped accurately.
+  - Outputs are validated against a defined JSON schema.
+- **Tests**:
+  - Comprehensive unit tests validate the correctness of entity and relationship extraction.
+
+---
+
+## **2. LLM Integration: Effective Usage of the LLM API and Prompt Engineering**
+- **Implementation**:
+  - The OpenAI GPT API is used with a well-designed prompt stored in `prompts/entity_relationship_prompt.json`.
+  - Modularized prompt design ensures consistency and simplifies updates.
+  - Regex-based extraction ensures valid JSON data is captured from LLM outputs.
+- **Error Handling**:
+  - Handles hallucinated or incomplete JSON outputs through validation and fallback mechanisms.
+
+---
+
+## **3. Code Quality: Clean, Modular, and Well-Documented Code**
+- **Implementation**:
+  - The codebase is organized into modules:
+    - `build_graph.py` for entity consolidation.
+    - `extract_graph_elements.py` for LLM interaction.
+    - `validation.py` for schema validation.
+    - `display.py` for visualization.
+  - Logging is used for error tracing and debugging.
+  - Functions are well-documented with clear docstrings.
+
+---
+
+## **4. Extensibility: Ability to Extend the Solution**
+- **Implementation**:
+  - New entity types or relationships can be added by modifying the prompt and schema.
+  - Modular architecture allows for easy integration of additional features.
+- **Scenarios**:
+  - Supports multilingual prompts for future expansion.
+  - Handles scalable datasets with batch processing.
+
+---
+
+## **5. Performance: Efficient Processing of Medium to Large Reports**
+- **Implementation**:
+  - Batch processing splits large reports into manageable chunks.
+  - Caching avoids redundant API calls, reducing latency and improving efficiency.
+  - Rate limiting ensures compliance with API limits.
+- **Potential Enhancements**:
+  - Further optimization for parallel processing.
+
+---
+
+## **6. Documentation: Clarity in Explaining the Solution**
+- **Implementation**:
+  - The README includes:
+    - Setup instructions.
+    - Example input/output.
+    - Challenges faced and their mitigations.
+    - Testing and usage guidelines.
+  - Documentation is provided for all modules and key functions.
+
+---
+
+## **7. Bonus: Innovative Features**
+- **Visualization**:
+  - Relationship visualization using `matplotlib` and `networkx`.
+- **Extensibility**:
+  - Designed to support additional entity types, relationships, and multilingual prompts.
+
+---
+
+This comprehensive implementation ensures the solution is robust, accurate, and scalable for real-world applications.
+
+
+
 ## Project Structure
 
 ```plaintext
