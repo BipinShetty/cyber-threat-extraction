@@ -89,18 +89,102 @@ cyber-threat-extraction/
 
 ### Input (`input.txt`)
 ```plaintext
-The threat actor "ShadowBear" has been identified using the malware "MalNet" in a targeted campaign against the healthcare industry in Europe. The campaign involved phishing emails to deliver the malware. ShadowBear is suspected of being linked to the region of Eastern Europe and has previously targeted government institutions.
+Report Summary:
+A cybersecurity threat has been identified involving the threat actor "ShadowBear."
+
+Key Findings:
+1. The threat actor "ShadowBear" is linked to Eastern Europe.
+2. "ShadowBear" used the malware "MalNet" in a targeted campaign.
+3. The target of the campaign was the healthcare industry in Europe.
+4. The attack was delivered through phishing emails.
+5. "ShadowBear" has a history of targeting government institutions.
+
+Details:
+- Threat Actor: "ShadowBear"
+  - Region: Eastern Europe
+  - Known Activity: Previous attacks on government institutions
+
+- Malware: "MalNet"
+  - Usage: Deployed by "ShadowBear" in recent campaigns
+  - Delivery Method: Phishing emails
+
+- Target: Healthcare Industry
+  - Region: Europe
+
 ```
 
 ### Output (`output.json`)
 ```json
 {
     "entities": [
-        {"id": "1", "name": "ShadowBear", "type": "Threat Actor"},
-        {"id": "2", "name": "MalNet", "type": "Malware"}
+        {
+            "id": "1",
+            "name": "ShadowBear",
+            "type": "Threat Actor",
+            "additional_info": {
+                "Region": "Eastern Europe",
+                "Known Activity": "Previous attacks on government institutions"
+            }
+        },
+        {
+            "id": "2",
+            "name": "MalNet",
+            "type": "Malware",
+            "additional_info": {
+                "Usage": "Deployed by ShadowBear in recent campaigns",
+                "Delivery Method": "Phishing emails"
+            }
+        },
+        {
+            "id": "3",
+            "name": "Healthcare industry",
+            "type": "Industry",
+            "additional_info": {
+                "Region": "Europe"
+            }
+        },
+        {
+            "id": "4",
+            "name": "Phishing emails",
+            "type": "TTPs"
+        },
+        {
+            "id": "5",
+            "name": "Eastern Europe",
+            "type": "Location"
+        },
+        {
+            "id": "6",
+            "name": "Europe",
+            "type": "Location"
+        }
     ],
     "relationships": [
-        {"source": "ShadowBear", "target": "MalNet", "type": "uses"}
+        {
+            "source": "ShadowBear",
+            "target": "MalNet",
+            "type": "uses"
+        },
+        {
+            "source": "ShadowBear",
+            "target": "Healthcare industry",
+            "type": "targets"
+        },
+        {
+            "source": "ShadowBear",
+            "target": "Eastern Europe",
+            "type": "located"
+        },
+        {
+            "source": "MalNet",
+            "target": "Healthcare industry",
+            "type": "targets"
+        },
+        {
+            "source": "MalNet",
+            "target": "Phishing emails",
+            "type": "delivered using"
+        }
     ]
 }
 ```
