@@ -70,8 +70,27 @@ This solution leverages a Large Language Model (LLM), specifically OpenAI's GPT,
    - Mitigation: Iterative refinement of the prompt and modularization into a separate JSON file for easier updates.
 
 3. **Scalability**:
-   - Issue: Large reports posed a potential risk of exceeding token limits.
-   - Mitigation: Implemented logging and structure to handle smaller batches of reports if required.
+   Challenges
+Large Input Reports:
+-Issue: Large reports can exceed token limits or cause memory issues during processing.
+Impact: The system may fail to handle extensive datasets or produce incomplete outputs.
+Repeated Requests:
+-Issue: Similar input chunks may result in redundant API calls, increasing latency and costs.
+Impact: Processing time and resource utilization become inefficient.
+Mitigation Strategies
+Batch Processing:
+Approach: Split large reports into smaller, manageable chunks (e.g., paragraphs or sections) and process them sequentially.
+Benefits:
+Reduces token usage per request.
+Ensures scalability for larger datasets without memory overflow.
+-Caching API Responses:
+Approach: Use a caching mechanism to store responses for previously processed input chunks.
+Benefits:
+Eliminates redundant API calls for identical inputs.
+Enhances performance by reducing processing time and API costs.
+
+Solution
+Break the report into smaller batches (e.g., paragraphs or sections) and process them sequentially or concurrently.
 ---
 
 ## Installation
