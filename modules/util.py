@@ -20,7 +20,19 @@ def validate_with_llm(data, api_key):
     openai.api_key = api_key
 
     prompt = f"""
-    The following JSON was generated based on a cybersecurity report. Please validate the JSON against the expected schema.
+    The following JSON was generated based on a cybersecurity report. Please validate the JSON against the expected schema mentioned next.
+    
+    Output the results as a JSON object with the following structure:
+      {{
+        "entities": [
+          {{ "id": "unique_id", "name": "entity_name", "type": "entity_type", "additional_info": {{...}} }}
+        ],
+        "relationships": [
+          {{ "source": "source_entity_id", "target": "target_entity_id", "type": "relationship_type" }}
+        ]
+      }}
+
+
     If valid, respond with 'VALID'. If invalid, specify the issues in detail.
 
     JSON:
