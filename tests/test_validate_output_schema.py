@@ -1,6 +1,6 @@
 import pytest
 from jsonschema import ValidationError
-from modules.validation import validate_output_schema
+from modules.util import validate_output_schema
 
 def test_validate_output_schema_valid():
     # Valid input data

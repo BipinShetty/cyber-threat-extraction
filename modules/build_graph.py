@@ -13,6 +13,7 @@ def consolidate_entities(data):
     """
     logging.info("Starting entity consolidation process.")
     seen_entities = {}
+    seen_relationship ={}
 
     # Consolidate entities
     for entity in data.get("entities", []):
@@ -37,10 +38,13 @@ def consolidate_entities(data):
     #  Map relationships with entity names as source and target, type is the edge of relationship between 2.
     relationships = []
     for relationship in data.get("relationships", []):
-        relationship["source"] = entity_name_map.get(relationship["source"])
-        relationship["target"] = entity_name_map.get(relationship["target"])
-        relationships.append(relationship)
-        logging.debug(f"Processed relationship: {relationship}")
+        key = (relationship["source"],relationship["target"],relationship["type"])
+        if key not in seen_relationship:
+            relationship["source"] = entity_name_map.get(relationship["source"])
+            relationship["target"] = entity_name_map.get(relationship["target"])
+            relationships.append(relationship)
+            seen_relationship[key] = relationship
+            logging.debug(f"Processed relationship: {relationship}")
 
     logging.info("Relationship normalization completed.")
 

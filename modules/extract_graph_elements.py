@@ -2,6 +2,7 @@ import openai
 import json
 import re
 import logging
+from modules.util import validate_with_llm
 
 
 def extract_entities_and_relationships(report_text, api_key):
@@ -19,7 +20,7 @@ def extract_entities_and_relationships(report_text, api_key):
     openai.api_key = api_key
     # I have used prompt directly in here for better readability and this is present in /prompts/entity_relationship_prompt.json too for better structure later...
     prompt = f"""
-    Analyze the following cybersecurity threat intelligence report and extract the key entities and their relationships. 
+    Analyze the following cybersecurity threat intelligence report. If the data is unstructured, first organize it into a structured format that highlights key details. Then, extract the key entities and their relationships.
 
     Requirements:
     - Extract entities and classify them into the following types:
@@ -43,11 +44,30 @@ def extract_entities_and_relationships(report_text, api_key):
         ]
       }}
 
+    Example Input:
+    "The threat actor 'ShadowBear' used the malware 'MalNet' in a targeted attack on the healthcare industry in Europe. 
+    The malware was delivered through phishing emails. ShadowBear has been linked to Eastern Europe and has previously targeted government institutions."
+
+    Example Output:
+    {{
+      "entities": [
+        {{ "id": "1", "name": "ShadowBear", "type": "Threat Actor", "additional_info": {{ "Region": "Eastern Europe" }} }},
+        {{ "id": "2", "name": "MalNet", "type": "Malware", "additional_info": {{ "Delivery Method": "Phishing emails" }} }},
+        {{ "id": "3", "name": "Healthcare Industry", "type": "Industry", "additional_info": {{ "Region": "Europe" }} }},
+        {{ "id": "4", "name": "Government Institutions", "type": "Industry", "additional_info": {{}} }}
+      ],
+      "relationships": [
+        {{ "source": "1", "target": "2", "type": "uses" }},
+        {{ "source": "1", "target": "3", "type": "targets" }},
+        {{ "source": "1", "target": "4", "type": "previously targeted" }}
+      ]
+    }}
+
     Cybersecurity Report:
     {report_text}
     """
-    # Call open-ai for getting the relationship and entity info. I used my open-ai key for same
     try:
+        # Call LLM for extraction
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
@@ -56,33 +76,28 @@ def extract_entities_and_relationships(report_text, api_key):
             ],
             max_tokens=1000
         )
+        content = response.choices[0].message.content.strip()
+        logging.debug(f"Raw response from OpenAI: {content}")
 
-        if response and response.choices:
-            content = response.choices[0].message.content.strip()
-            logging.debug(f"Raw response from OpenAI: {content}")
-            try:
-                # Extract the JSON portion using regex
-                json_match = re.search(r"\{.*\}", content, re.S)
-                if not json_match:
-                    raise ValueError("JSON data not found in the response.")
+        try:
+            # Extract the JSON portion using regex
+            json_match = re.search(r"\{.*\}", content, re.S)
+            if not json_match:
+                raise ValueError("JSON data not found in the response.")
 
-                json_content = json_match.group(0)
-                data = json.loads(json_content)
+            json_content = json_match.group(0)
+            data = json.loads(json_content)
 
-                # Validate the JSON structure for entities and relationships info as per prompt and json schema
-                if not isinstance(data, dict) or "entities" not in data or "relationships" not in data:
-                    raise ValueError("Invalid JSON structure: missing 'entities' or 'relationships'")
-                if not all(isinstance(entity, dict) for entity in data.get("entities", [])):
-                    raise ValueError("Invalid entity format detected")
-                if not all(isinstance(relationship, dict) for relationship in data.get("relationships", [])):
-                    raise ValueError("Invalid relationship format detected")
+            # Validate output with LLM itself
+            if not validate_with_llm(data, api_key):
+                raise ValueError("LLM validation of its output failed.")
 
-                logging.info("Entity and relationship extraction successful.")
-                return data
-            except json.JSONDecodeError as e:
-                logging.error(f"Failed to parse JSON: {e}")
-                raise ValueError(f"Response is not valid JSON: {e}")
-        raise ValueError("No valid response from the API.")
+            logging.info("Entity and relationship extraction successful.")
+            return data
+        except json.JSONDecodeError as e:
+            logging.error(f"Failed to parse JSON: {e}")
+            raise ValueError(f"Response is not valid JSON: {e}")
     except openai.error.OpenAIError as e:
         logging.error(f"OpenAI API error: {e}")
         raise RuntimeError(f"OpenAI API error received: {e}")
+
