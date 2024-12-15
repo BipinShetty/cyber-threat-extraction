@@ -143,19 +143,36 @@ This solution leverages a Large Language Model (LLM), specifically OpenAI's GPT,
 
 ## **Challenges Faced and How They Were Mitigated**
 
-1. **Hallucinated JSON Responses**:
-   - **Issue**: The LLM occasionally returned incomplete or invalid JSON outputs.
-   - **Mitigation**: 
-     - Added regex-based extraction to identify valid JSON portions.
-     - Followed up with schema validation to ensure the output adheres to the required structure.
+**Hallucination Reduction Measures**
 
-2. **Prompt Tuning**:
-   - **Issue**: Initial prompts resulted in inconsistent entity classifications.
-   - **Mitigation**:
-     - Iteratively refined the prompt to ensure consistent responses.
-     - Modularized the prompt into a separate JSON file for easier updates and maintainability.
+**Preprocessing for Input Consistency**
+* **Issue:** Ambiguous input text can lead to inconsistent or unclear LLM responses.
+* **Mitigation:**
+  * Employ SpaCy to clean, tokenize, and standardize input text.
+  * This preprocessing significantly reduces ambiguities and improves LLM comprehension.
 
-3. **Scalability**: (How can be mitigated in future)
+**Enhanced Prompt Engineering**
+* **Issue:** Initial prompts caused inconsistent entity classifications and hallucinations.
+* **Mitigation:**
+  * Added 1-shot examples to provide context and demonstrate expected outputs.
+  * Included an expected JSON schema to ensure structured and valid LLM-generated results.
+  * Modularized prompt design for easier updates and future adaptability.
+  * **Code Reference:** Prompt Code
+
+**LLM Self-Critique**
+* **Issue:** The LLM sometimes produced invalid JSON responses with missing entities or relationships.
+* **Mitigation:**
+  * Introduced a secondary validation step where the LLM critiques its own output against the predefined schema.
+  * This feedback loop helps detect and resolve inconsistencies in real-time.
+  * **Code Reference:** Validation Code
+
+**Elimination of Redundancies**
+* **Issue:** Output occasionally contained duplicate entities or relationships.
+* **Mitigation:**
+  * Improved post-processing logic to detect and remove redundant entities and relationships.
+  * This refinement enhances data quality for graph database storage and downstream tasks.
+
+2.**Scalability**: (How can be mitigated in future)
    ### **Challenges**
    - **Large Input Reports**:
      - **Issue**: Large reports can exceed token limits or cause memory issues during processing.
